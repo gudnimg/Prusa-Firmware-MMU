@@ -63,7 +63,7 @@ jobs:
         name: Firmware
         path: build/*.hex
 
-    - name: RELEASE THE KRAKEN
+    - name: RELEASE THE KRAKEN2
       if: startsWith(github.ref, 'refs/tags/v')
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
