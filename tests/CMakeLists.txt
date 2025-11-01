@@ -51,7 +51,7 @@ if(GCOV_ENABLE)
       ${LCOV_BINARY} --remove coverage.info /usr/* ${PROJECT_SOURCE_DIR}/tests/*
       ${PROJECT_SOURCE_DIR}/lib/Catch2/* -o coverage.info
       # Package it up.
-    COMMAND genhtml --output-directory ${PROJECT_BINARY_DIR}/Coverage -- coverage.info 
+    COMMAND genhtml -v --output-directory ${PROJECT_BINARY_DIR}/Coverage -- coverage.info 
     COMMAND tar -zcvf Coverage.tar.gz Coverage
             # Cheat and compare a file to itself to check for existence. File-Not-Found is a failure
             # code.
