@@ -45,12 +45,11 @@ if(GCOV_ENABLE)
     WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
     COMMAND
       ${LCOV_BINARY} --capture --gcov-tool="${GCOV_BINARY}" --directory ${PROJECT_BINARY_DIR}
-      --base-directory ${CMAKE_SOURCE_DIR}
       --output-file ${PROJECT_BINARY_DIR}/coverage.info
       # Strip system headers and other uninteresting stuff.
     COMMAND
-      ${LCOV_BINARY} --remove coverage.info /usr/* ${PROJECT_SOURCE_DIR}/tests/*
-      ${PROJECT_SOURCE_DIR}/lib/Catch2/* -o coverage.info
+      ${LCOV_BINARY} --remove coverage.info '/usr/*' '${PROJECT_SOURCE_DIR}/tests/*'
+      '${PROJECT_SOURCE_DIR}/lib/Catch2/*' -o coverage.info
       # Package it up.
     COMMAND genhtml -v --output-directory ${PROJECT_BINARY_DIR}/Coverage -- coverage.info 
     COMMAND tar -zcvf Coverage.tar.gz Coverage
