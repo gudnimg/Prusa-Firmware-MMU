@@ -61,6 +61,7 @@ if(GCOV_ENABLE)
             ${PROJECT_BINARY_DIR}/.ctest-finished
     BYPRODUCTS ${PROJECT_BINARY_DIR}/Summary.txt ${PROJECT_BINARY_DIR}/Coverage.tar.gz
                ${PROJECT_BINARY_DIR}/Coverage ${PROJECT_BINARY_DIR}/coverage.info
+    USES_TERMINAL
     DEPENDS test_run_all
     )
 else()
