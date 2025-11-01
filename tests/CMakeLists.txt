@@ -45,6 +45,7 @@ if(GCOV_ENABLE)
     WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
     COMMAND
       ${LCOV_BINARY} --capture --gcov-tool="${GCOV_BINARY}" --directory ${PROJECT_BINARY_DIR}
+      --rc geninfo_auto_base=0
       --output-file ${PROJECT_BINARY_DIR}/coverage.info
       # Strip system headers and other uninteresting stuff.
     COMMAND
