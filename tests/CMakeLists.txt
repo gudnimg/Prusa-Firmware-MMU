@@ -1,7 +1,7 @@
 option(GCOV_ENABLE "Enable/use GCOV code coverage for tests" ON)
 
 if(GCOV_ENABLE)
-  find_program(GCOV_BINARY NAMES gcov gcov-7)
+  find_program(GCOV_BINARY NAMES gcov-${CMAKE_CXX_COMPILER_VERSION} gcov)
   find_program(LCOV_BINARY NAMES lcov)
   message(STATUS "Using gcov ${GCOV_BINARY} and LCOV ${LCOV_BINARY}")
   add_compile_options(-g -O0 -fprofile-arcs -ftest-coverage)
@@ -48,10 +48,10 @@ if(GCOV_ENABLE)
       --output-file ${PROJECT_BINARY_DIR}/coverage.info
       # Strip system headers and other uninteresting stuff.
     COMMAND
-      ${LCOV_BINARY} --remove coverage.info '/usr/*' '${PROJECT_SOURCE_DIR}/tests/*'
-      '${PROJECT_SOURCE_DIR}/lib/Catch2/*' -o coverage.info
+      ${LCOV_BINARY} --remove coverage.info /usr/* ${PROJECT_SOURCE_DIR}/tests/*
+      ${PROJECT_SOURCE_DIR}/lib/Catch2/* -o coverage.info
       # Package it up.
-    COMMAND genhtml coverage.info --output-directory Coverage
+    COMMAND genhtml --output-directory ${PROJECT_BINARY_DIR}/Coverage -- coverage.info 
     COMMAND tar -zcvf Coverage.tar.gz Coverage
             # Cheat and compare a file to itself to check for existence. File-Not-Found is a failure
             # code.
@@ -60,7 +60,7 @@ if(GCOV_ENABLE)
     COMMAND ${CMAKE_COMMAND} -E compare_files ${PROJECT_BINARY_DIR}/.ctest-finished
             ${PROJECT_BINARY_DIR}/.ctest-finished
     BYPRODUCTS ${PROJECT_BINARY_DIR}/Summary.txt ${PROJECT_BINARY_DIR}/Coverage.tar.gz
-               ${PROJECT_BINARY_DIR}Coverage ${PROJECT_BINARY_DIR}/coverage.info
+               ${PROJECT_BINARY_DIR}/Coverage ${PROJECT_BINARY_DIR}/coverage.info
     DEPENDS test_run_all
     )
 else()
